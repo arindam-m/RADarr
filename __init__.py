@@ -34,8 +34,8 @@ bl_info = {
     "name": "RADarr",
     "description": "Radial Array made super easy",
     "author": "Arindam Mondal",
-    "version": (283, 0, 1),
-    "blender": (2, 83, 0),
+    "version": (292, 0, 1),
+    "blender": (2, 92, 0),
     "location": "3D Viewport > Object Mode",
     "category": "Object"
 }
@@ -58,7 +58,7 @@ operator_doff = True
 
 user_dir = os.path.expanduser("~")
 # home_dir = os.environ.get('HOME')
-common_subdir = "2.83/scripts/addons/RADarr"
+common_subdir = "2.92/scripts/addons/RADarr"
 
 if system() == 'Linux':
     addon_path = "/.config/blender/" + common_subdir
