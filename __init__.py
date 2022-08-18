@@ -57,29 +57,27 @@ ci, co = True, False
 operator_doff = True
 
 user_dir = os.path.expanduser("~")
-# home_dir = os.environ.get('HOME')
-common_subdir = "3.0/scripts/addons/RADarr"
+home_dir = os.environ.get('HOME')
 
-if system() == 'Linux':
-    addon_path = "/.config/blender/" + common_subdir
-elif system() == 'Windows':
-    addon_path = (
-        "\\AppData\\Roaming\\Blender Foundation\\Blender\\"
-        + common_subdir.replace("/", "\\")
-    )
-    # os.path.join()
-elif system() == 'Darwin':
-    addon_path = "/Library/Application Support/Blender/" + common_subdir
+# check user preferences for custom script directory
+custom_script_dir = bpy.utils.script_path_pref()
+if not custom_script_dir:
+    # use default user script directory if not set
+    custom_script_dir = bpy.utils.script_path_user()
+    if not os.path.isdir(custom_script_dir):
+        # last resort check all possible script locations
+        for path in bpy.utils.script_paths():
+            for f in os.listdir(path + "/addons/"):
+                if "RADarr" in f:
+                    custom_script_dir = path + "/addons/"
 
-addon_dir = user_dir + addon_path
+custom_script_dir = custom_script_dir.replace("\\", "/")
 
-custom_script_dir = bpy.context.preferences.filepaths.script_directory
-
-if os.path.isdir(addon_dir) == False:
-    if system() == 'Windows':
-        addon_dir = custom_script_dir + "\\addons\\RADarr"
-    else:
-        addon_dir = custom_script_dir + "/addons/RADarr"
+# take into account alternate folder names ("RADarr-master" etc.)
+for f in os.listdir(custom_script_dir + "/addons/"):
+    if "RADarr" in f:
+        addon_dir = custom_script_dir + "/addons/" + f
+        break
 
 modal_file_path = addon_dir + "/modal/bool_state.txt"
 
