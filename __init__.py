@@ -56,9 +56,6 @@ mt_offset_rot_nor = 0.0
 ci, co = True, False
 operator_doff = True
 
-user_dir = os.path.expanduser("~")
-home_dir = os.environ.get('HOME')
-
 # check user preferences for custom script directory
 custom_script_dir = bpy.utils.script_path_pref()
 if not custom_script_dir:
@@ -67,9 +64,10 @@ if not custom_script_dir:
     if not os.path.isdir(custom_script_dir):
         # last resort check all possible script locations
         for path in bpy.utils.script_paths():
-            for f in os.listdir(path + "/addons/"):
-                if "RADarr" in f:
-                    custom_script_dir = path + "/addons/"
+            if os.path.exists(path + "/addons/"):
+                for f in os.listdir(path + "/addons/"):
+                    if "RADarr" in f:
+                        custom_script_dir = path
 
 custom_script_dir = custom_script_dir.replace("\\", "/")
 
