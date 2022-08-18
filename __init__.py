@@ -56,9 +56,6 @@ mt_offset_rot_nor = 0.0
 ci, co = True, False
 operator_doff = True
 
-user_dir = os.path.expanduser("~")
-home_dir = os.environ.get('HOME')
-
 # check user preferences for custom script directory
 custom_script_dir = bpy.utils.script_path_pref()
 if not custom_script_dir:
