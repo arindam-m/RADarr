@@ -69,7 +69,7 @@ if not custom_script_dir:
         for path in bpy.utils.script_paths():
             for f in os.listdir(path + "/addons/"):
                 if "RADarr" in f:
-                    custom_script_dir = path + "/addons/"
+                    custom_script_dir = path
 
 custom_script_dir = custom_script_dir.replace("\\", "/")
 
