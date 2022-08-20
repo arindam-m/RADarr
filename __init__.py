@@ -55,34 +55,14 @@ mt_offset_rot_nor = 0.0
 
 ci, co = True, False
 operator_doff = True
-right_path = False
 
-# check user preferences for custom script directory
-custom_script_dir = bpy.utils.script_path_pref()
-if not custom_script_dir:
-    # use default user script directory if not set
-    custom_script_dir = bpy.utils.script_path_user()
-    if os.path.exists(custom_script_dir + "/addons/"):
-        for f in os.listdir(custom_script_dir + "/addons/"):
+# check all possible script paths
+for path in bpy.utils.script_paths():
+    if os.path.exists(path + "/addons/"):
+        for f in os.listdir(path + "/addons/"):
             if "RADarr" in f:
-                right_path = True
+                addon_dir = path.replace("\\", "/") + "/addons/" + f
                 break
-    if not right_path:
-        # last resort check all possible script locations
-        for path in bpy.utils.script_paths():
-            if os.path.exists(path + "/addons/"):
-                for f in os.listdir(path + "/addons/"):
-                    if "RADarr" in f:
-                        custom_script_dir = path
-                        break
-
-custom_script_dir = custom_script_dir.replace("\\", "/")
-
-# take into account alternate folder names ("RADarr-master" etc.)
-for f in os.listdir(custom_script_dir + "/addons/"):
-    if "RADarr" in f:
-        addon_dir = custom_script_dir + "/addons/" + f
-        break
 
 modal_file_path = addon_dir + "/modal/bool_state.txt"
 
