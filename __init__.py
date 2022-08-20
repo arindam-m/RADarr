@@ -61,13 +61,14 @@ custom_script_dir = bpy.utils.script_path_pref()
 if not custom_script_dir:
     # use default user script directory if not set
     custom_script_dir = bpy.utils.script_path_user()
-    if not os.path.isdir(custom_script_dir):
+    if not "RADarr" in os.listdir(custom_script_dir + "/addons/"):
         # last resort check all possible script locations
         for path in bpy.utils.script_paths():
             if os.path.exists(path + "/addons/"):
                 for f in os.listdir(path + "/addons/"):
                     if "RADarr" in f:
                         custom_script_dir = path
+                        break
 
 custom_script_dir = custom_script_dir.replace("\\", "/")
 
