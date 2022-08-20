@@ -55,6 +55,7 @@ mt_offset_rot_nor = 0.0
 
 ci, co = True, False
 operator_doff = True
+found_radarr = False
 
 # check all possible script paths
 for path in bpy.utils.script_paths():
@@ -62,7 +63,10 @@ for path in bpy.utils.script_paths():
         for f in os.listdir(path + "/addons/"):
             if "RADarr" in f:
                 addon_dir = path.replace("\\", "/") + "/addons/" + f
+                found_radarr = True
                 break
+    if found_radarr:
+        break
 
 modal_file_path = addon_dir + "/modal/bool_state.txt"
 
