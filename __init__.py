@@ -55,31 +55,18 @@ mt_offset_rot_nor = 0.0
 
 ci, co = True, False
 operator_doff = True
+found_radarr = False
 
-user_dir = os.path.expanduser("~")
-# home_dir = os.environ.get('HOME')
-common_subdir = "3.0/scripts/addons/RADarr"
-
-if system() == 'Linux':
-    addon_path = "/.config/blender/" + common_subdir
-elif system() == 'Windows':
-    addon_path = (
-        "\\AppData\\Roaming\\Blender Foundation\\Blender\\"
-        + common_subdir.replace("/", "\\")
-    )
-    # os.path.join()
-elif system() == 'Darwin':
-    addon_path = "/Library/Application Support/Blender/" + common_subdir
-
-addon_dir = user_dir + addon_path
-
-custom_script_dir = bpy.context.preferences.filepaths.script_directory
-
-if os.path.isdir(addon_dir) == False:
-    if system() == 'Windows':
-        addon_dir = custom_script_dir + "\\addons\\RADarr"
-    else:
-        addon_dir = custom_script_dir + "/addons/RADarr"
+# check all possible script paths
+for path in bpy.utils.script_paths():
+    if os.path.exists(path + "/addons/"):
+        for f in os.listdir(path + "/addons/"):
+            if "RADarr" in f:
+                addon_dir = path.replace("\\", "/") + "/addons/" + f
+                found_radarr = True
+                break
+    if found_radarr:
+        break
 
 modal_file_path = addon_dir + "/modal/bool_state.txt"
 
